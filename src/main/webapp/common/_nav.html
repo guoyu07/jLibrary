@@ -1,0 +1,19 @@
+#define bar(preList, now)
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/"><span class="glyphicon glyphicon-book"></span> jLibrary</a>
+                </li>
+                #for(x : preList)
+                <li>
+                    <a href="#">#(x)</a>
+                </li>
+                #end
+                <li class="active">
+                    #(now)
+                </li>
+            </ul>
+        </div>
+    </div>
+#end
