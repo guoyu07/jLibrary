@@ -1,5 +1,6 @@
 package config;
 
+import book.BookController;
 import com.jfinal.config.*;
 import com.jfinal.core.JFinal;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
@@ -15,7 +16,7 @@ import user.UserController;
 /**
  * Created by wgz61 on 2017/6/27.
  */
-public class DemoConfig extends JFinalConfig {
+public class JLibraryConfig extends JFinalConfig {
 
     public void configConstant(Constants constants) {
         constants.setDevMode(true);
@@ -25,8 +26,9 @@ public class DemoConfig extends JFinalConfig {
         routes.add("/hello", HelloController.class);
         routes.add("/", IndexController.class);
         routes.add("/login", LoginController.class);
-        routes.add("user", UserController.class);
-        routes.add("admin", AdminController.class);
+        routes.add("/user", UserController.class);
+        routes.add("/admin", AdminController.class);
+        routes.add("/book", BookController.class);
     }
 
     public void configEngine(Engine engine) {
@@ -53,9 +55,5 @@ public class DemoConfig extends JFinalConfig {
 
     public void configHandler(Handlers handlers) {
 
-    }
-
-    public static void main(String[] args) {
-        JFinal.start("src/main/webapp", 8008, "/");
     }
 }

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+#include("/common/_nav.html")
+#include("/common/_footer.html")
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>jLibrary</title>
+</head>
+<body>
+<div class="container">
+    #@bar(preList, now)
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="page-header">
+                    <h1>
+                        #(user.uName)
+                        <small>#(user.uUsername)</small>
+                    </h1>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-6 column">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    已借图书
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+
+                            </div>
+                            <div class="panel-footer">
+                                <a data-toggle="modal" data-target="#borrowModal">
+                                    <span class="glyphicon glyphicon-chevron-right pull-right"></span>新增借阅
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 column">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+
+                            </div>
+                            <div class="panel-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    #@footer()
+</div>
+<div class="modal fade" id="borrowModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">新增借阅</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" action="">
+                    <div class="form-group">
+                        <label for="inputBookID" class="col-sm-2 control-label">书号</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputBookID" name="bookID"
+                                   placeholder="书号在侧面标签上可找到。"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputBookID" class="col-sm-2 control-label">书名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputBookName" name="bookName"
+                                   placeholder="点击查询验证书名。" disabled="true"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-warning" id="checkBtn">查询</button>
+                <button type="button" class="btn btn-primary" id="borrowBtn">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $('#checkBtn').click(function () {
+        var bookID = document.getElementById("inputBookID").value;
+        var bookNameField = document.getElementById("inputBookName");
+        $.ajax({
+            data: {"bookID": bookID},
+            type: "post",
+            url: "/user/check",
+            success: function (data) {
+                var name = data.bookName;
+                bookNameField.value = name;
+            }
+        })
+    })
+</script>
+</html>

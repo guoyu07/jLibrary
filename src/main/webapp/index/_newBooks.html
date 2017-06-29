@@ -7,13 +7,21 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th>书号</th>
+                <th>编号</th>
+                <th>书名</th>
+                <th>作者</th>
+                <th>地点</th>
+                <th>详情</th>
             </tr>
             </thead>
             <tbody>
             #for(b:newBooks)
             <tr>
                 <td>#(b.id)</td>
+                <td>#(b.name)</td>
+                <td>#(b.author)</td>
+                <td>#(b.locale)</td>
+                <td><a href="#">更多</a></td>
             </tr>
             #end
             </tbody>
