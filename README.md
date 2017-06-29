@@ -20,3 +20,7 @@ Using Eclipse/MyEclipse
 4.  Checkout in your browser! (localhost:port)
 
 If you want to use Tomcat instead of Jetty bundled with JFinal, you might remove the jetty-server dependency before putting the war package into Tomcat.
+
+## JFinal Web Framework
+
+- www.JFinal.com
