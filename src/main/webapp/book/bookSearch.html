@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 #include("/common/_nav.html")
 #include("/common/_footer.html")
+#include("_result.html")
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,39 +13,135 @@
 <body>
 <div class="container">
     #@bar(preList, now)
-    <div class="container">
-        <div class="row clearfix">
-            <div class="col-md-12 column">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            Panel title
-                        </h3>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        图书查询
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" id="queryForm">
+                        <div class="form-group">
+                            <label for="keyword">关键字</label>
+                            <input type="text" class="form-control" id="keyword" placeholder="请输入关键字...">
+                        </div>
+                        <div class="checkbox-inline">
+                            <label>
+                                <input type="radio" name="queryType" id="optionsRadios1" value="id" checked>书号
+                            </label>
+                        </div>
+                        <div class="checkbox-inline">
+                            <label>
+                                <input type="radio" name="queryType" id="optionsRadios2" value="name">书名
+                            </label>
+                        </div>
+                        <div class="checkbox-inline">
+                            <label>
+                                <input type="radio" name="queryType" id="optionsRadios3" value="author">作者
+                            </label>
+                        </div>
+                        <div class="checkbox-inline">
+                            <label>
+                                <input type="radio" name="queryType" id="optionsRadios4" value="locale">存放地点
+                            </label>
+                        </div>
+                        <div class="checkbox-inline">
+                            <label>
+                                <input type="radio" name="queryType" id="optionsRadios5" value="supplier">供应商
+                            </label>
+                        </div>
+                    </form>
+                    <div class="pull-right">
+                        <label>
+                            <div class="btn-group">
+                                <button id="queryAllBtn" class="btn btn-default" value="查看全部">查看全部</button>
+                                <button id="queryBtn" class="btn btn-primary" value="查询">查询</button>
+                            </div>
+                        </label>
                     </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                    <div class="panel-footer">
-                        Panel footer
+
+                </div>
+                <div class="panel-footer">
+
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        查询结果
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div id="resultDiv">
+                        <table class="table table-striped">
+                            <thead id="grid_head">
+
+                            </thead>
+                            <tbody id="grid_body">
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            Panel title
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                    <div class="panel-footer">
-                        Panel footer
-                    </div>
+                <div class="panel-footer">
+
                 </div>
             </div>
         </div>
     </div>
-
     #@footer()
 </div>
+</body>
+<script type="text/javascript">
+    $("#queryAllBtn").click(function () {
+        var radio = $('input[type="radio"][name="queryType"]:checked').val();
+        var queryType = radio;
+//        $.ajax({
+//            data: {
+//                "isAll": "yes",
+//                "queryType": radio
+//            },
+//            type: "post",
+//            url: "/book/query",
+//            success: function (data) {
+//                var result = data.res;
+//                var state = data.sta;
+//                for(t in result) {
+//                    alert(t);
+//                }
+//            }
+//        }))
+        $("#grid_head").empty();
+        var th = "<tr>";
+        if(queryType == "id") {
+            th += "<th>书名</th>";
+            th += "<th>作者</th>";
+            th += "<th>出版社</th>";
+            th += "<th>存放位置</th>";
+            th += "<th>供应商</th>";
+            th += "<th>ISBN</th>";
+            th += "</tr>";
+            $("#grid_head").append(th);
+            $("#grid_body").empty();
+            var loading = "正在加载...";
+            $("#grid_body").append(loading);
+        }
+        $.getJSON("/book/query", {"isAll": "yes", "queryType": radio}, function(data) {
+            $("#grid_body").empty();
+            $.each(data.res, function (i, item) {
+                var tr = "<tr>";
+                tr += "<td>" + item.name + "</td>";
+                tr += "<td>" + item.author + "</td>";
+                tr += "<td>" + item.press + "</td>";
+                tr += "<td>" + item.locale + "</td>";
+                tr += "<td>" + item.supplier + "</td>";
+                tr += "<td>" + item.isbn + "</td>";
+                tr += "</tr>";
+                $("#grid_body").append(tr);
+            });
+        });
+    })
+</script>
 </html>

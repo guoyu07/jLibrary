@@ -6,8 +6,11 @@ import common.modal.Locale;
 import common.modal.Supplier;
 import common.modal.Typee;
 import common.viewmodel.BookInfo;
+import common.viewmodel.TypeInfo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Created by wgz61 on 2017/6/29.
@@ -48,5 +51,62 @@ public class BookController extends Controller {
         setAttr("preList", null);
         setAttr("now", "图书查询");
         render("/book/bookSearch.html");
+    }
+
+    public void query() {
+        List<TypeInfo> toReturn = new ArrayList<TypeInfo>();
+        try {
+            String isAll = getPara("isAll");
+            String queryType = getPara("queryType");
+            if(isAll.equals("yes")) {
+
+                List<Typee> typees = Typee.dao.getAllTypees();
+                for (Typee t : typees
+                     ) {
+                    List<Book> books = Book.dao.find("SELECT * FROM book WHERE bType = " + t.getInt("id"));
+                    ArrayList<String> l = new ArrayList<String>();
+                    ArrayList<String> s = new ArrayList<String>();
+                    for (Book b : books
+                         ) {
+                        List<Locale> locale = Locale.dao.find("SELECT * FROM locale WHERE id = " + b.getInt("bLocale"));
+                        List<Supplier> supplier = Supplier.dao.find("SELECT * FROM supplier WHERE id = " + b.getInt("bSupplier"));
+                        String loc = locale.get(0).getStr("lName");
+                        String sup = supplier.get(0).getStr("sName");
+                        l.add(loc);
+                        s.add(sup);
+                    }
+                    HashSet<String> set = new HashSet<String>(l);
+                    l = new ArrayList<String>(set);
+                    set = new HashSet<String>(s);
+                    s = new ArrayList<String>(set);
+                    String lString = "";
+                    for (String ls : l
+                         ) {
+                        lString += ls + ",";
+                    }
+                    String sString = "";
+                    for (String ss : s
+                            ) {
+                        sString += ss + ",";
+                    }
+                    lString = lString.substring(0, lString.length()-1);
+                    sString = sString.substring(0, sString.length()-1);
+                    toReturn.add(new TypeInfo(
+                            t.getStr("tName"),
+                            t.getStr("tAuthor"),
+                            t.getStr("tPress"),
+                            lString,
+                            sString,
+                            t.getStr("tISBN")
+                            )
+                    );
+                }
+                setAttr("res", toReturn);
+                setAttr("sta", "success");
+            }
+        } catch (Exception e) {
+            setAttr("sta", "fail");
+        }
+        renderJson();
     }
 }
