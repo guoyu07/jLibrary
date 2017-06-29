@@ -23,4 +23,5 @@ If you want to use Tomcat instead of Jetty bundled with JFinal, you might remove
 
 ## JFinal Web Framework
 
+- https://github.com/jfinal/jfinal (简体中文) 
 - www.JFinal.com (简体中文)
