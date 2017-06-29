@@ -21,6 +21,9 @@ public class BookController extends Controller {
     }
 
     public void info() {
+        ArrayList<String> preList = new ArrayList<String>();
+        setAttr("preList", "图书查询");
+        setAttr("now", "图书详情");
         int bookID = Integer.parseInt(getPara(0));
         Book b = Book.dao.findById(bookID);
         Typee t = Typee.dao.findById(b.getInt("bType"));
@@ -38,5 +41,12 @@ public class BookController extends Controller {
         );
         setAttr("bookInfo", bi);
         render("/book/book.html");
+    }
+
+    public void search() {
+        ArrayList<String> preList = new ArrayList<String>();
+        setAttr("preList", null);
+        setAttr("now", "图书查询");
+        render("/book/bookSearch.html");
     }
 }
