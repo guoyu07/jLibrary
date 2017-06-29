@@ -27,6 +27,7 @@ public class IndexController extends Controller {
             newBooks.add(nb);
         }
         setAttr("newBooks", newBooks);
+
         render("/index/index.html");
     }
 }
