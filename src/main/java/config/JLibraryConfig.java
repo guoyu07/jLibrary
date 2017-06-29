@@ -2,7 +2,6 @@ package config;
 
 import book.BookController;
 import com.jfinal.config.*;
-import com.jfinal.core.JFinal;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.template.Engine;

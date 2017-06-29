@@ -15,14 +15,18 @@ public class UserController extends Controller {
         setAttr("preList", null);
         setAttr("now", "用户中心");
         setAttr("user", getSession().getAttribute("userInfo"));
-        render("/center/reader/user.html");
+        render("/center/user/user.html");
     }
 
     public void check() {
-        int bookID = Integer.parseInt(getPara("bookID"));
-        Book book = Book.dao.findById(bookID);
-        Typee typee = Typee.dao.findById(book.getInt("bType"));
-        setAttr("bookName", typee.getStr("tName"));
+        try {
+            int bookID = Integer.parseInt(getPara("bookID"));
+            Book book = Book.dao.findById(bookID);
+            Typee typee = Typee.dao.findById(book.getInt("bType"));
+            setAttr("bookName", typee.getStr("tName"));
+        } catch (Exception e) {
+            setAttr("bookName", "找不到该书！");
+        }
         renderJson();
     }
 }

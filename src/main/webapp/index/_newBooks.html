@@ -21,12 +21,16 @@
                 <td>#(b.name)</td>
                 <td>#(b.author)</td>
                 <td>#(b.locale)</td>
-                <td><a href="#">更多</a></td>
+                <td><a href="/book/info/#(b.id)">更多</a></td>
             </tr>
             #end
             </tbody>
         </table>
     </div>
+    <div class="panel-footer">
+        <a href="/book/search">
+            <span class="glyphicon glyphicon-chevron-right pull-right"></span>图书查询
+        </a>
+    </div>
 </div>
-
 #end
