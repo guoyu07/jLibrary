@@ -1,5 +1,6 @@
 package book;
 
+import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
@@ -9,6 +10,7 @@ import common.model.Supplier;
 import common.model.Typee;
 import common.viewmodel.BookInfo;
 import common.viewmodel.TypeInfo;
+import login.AuthInterceptor;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,6 +19,7 @@ import java.util.List;
 /**
  * Created by wgz61 on 2017/6/29.
  */
+@Before(AuthInterceptor.class)
 public class BookController extends Controller {
     public void index() {
         ArrayList<String> preList = new ArrayList<String>();

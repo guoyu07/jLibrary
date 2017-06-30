@@ -24,9 +24,11 @@ public class LoginController extends Controller {
         List<Admin> adminList = Admin.dao.findByNameAndPwd(getPara("username"), getPara("password"));
         List<User> userList = User.dao.findByNameAndPwd(getPara("username"), getPara("password"));
         if (userList.size() > 0) {
+            setSessionAttr("isloginned","yess");
             setSessionAttr("userInfo", userList.get(0));
             redirect("/user");
         } else if (adminList.size() > 0) {
+            setSessionAttr("isloginned","yes");
             setSessionAttr("adminInfo", adminList.get(0));
             redirect("/admin");
         } else {
