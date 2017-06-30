@@ -15,7 +15,7 @@ Using IntelliJ IDEA
 Using Eclipse/MyEclipse
 1.  Follow the previous five steps from using IDEA above.
 1.  **Additionally**, you need to add another parameter in step 4 into JFinal.start method.
-    <code>JFinal.start("src/main/webapp", 80, "/",5);</code> (int)5 is added.
+    <code>JFinal.start("src/main/webapp", 80, "/",5);</code> (int)5 is added as the last parameter.
 
 If you want to use Tomcat instead of Jetty bundled with JFinal, you might remove the jetty-server dependency before compiling.
 
