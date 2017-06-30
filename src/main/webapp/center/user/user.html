@@ -12,47 +12,93 @@
 <body>
 <div class="container">
     #@bar(preList, now)
-    <div class="container">
-        <div class="row clearfix">
-            <div class="col-md-12 column">
-                <div class="page-header">
-                    <h1>
-                        #(user.uName)
-                        <small>#(user.uUsername)</small>
-                    </h1>
-                </div>
-                <div class="row clearfix">
-                    <div class="col-md-6 column">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    已借图书
-                                </h3>
-                            </div>
-                            <div class="panel-body">
-
-                            </div>
-                            <div class="panel-footer">
-                                <a data-toggle="modal" data-target="#borrowModal">
-                                    <span class="glyphicon glyphicon-chevron-right pull-right"></span>新增借阅
-                                </a>
-                            </div>
-                        </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="page-header">
+                <h1>
+                    #(user.uName)
+                    <small>#(user.uUsername)</small>
+                </h1>
+            </div>
+            <div class="col-md-6 column">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            已借图书
+                        </h3>
                     </div>
-                    <div class="col-md-6 column">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>书本号</th>
+                                <th>书名</th>
+                                <th>借阅日期</th>
+                                <th>截止日期</th>
+                                <th>状态</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            #for(c : myCirs)
+                            <tr>
+                                <td>#(c.bID)</td>
+                                <td>#(c.tName)</td>
+                                <td>#(c.cDate)</td>
+                                <td>#(c.cDdl)</td>
+                                <td>#(c.cState)</td>
+                            </tr>
+                            #end
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel-footer">
+                        <a data-toggle="modal" data-target="#borrowModal">
+                            <span class="glyphicon glyphicon-chevron-right pull-right"></span>新增借阅
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 column">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
 
-                                </h3>
-                            </div>
-                            <div class="panel-body">
+                        </h3>
+                    </div>
+                    <div class="panel-body">
 
-                            </div>
-                            <div class="panel-footer">
+                    </div>
+                    <div class="panel-footer">
 
-                            </div>
-                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="col-md-12 column">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            个人信息
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <dl class="dl-horizontal">
+                            <dt>姓名</dt>
+                            <dd>#(user.uName)</dd>
+                            <dt>账号</dt>
+                            <dd>#(user.uUsername)</dd>
+                            <dt>性别</dt>
+                            <dd>#(user.uGender)</dd>
+                            <dt>电话号码</dt>
+                            <dd>#(user.uTel)</dd>
+                            <dt>信用额度</dt>
+                            <dd>#(user.uCredit)</dd>
+                        </dl>
+                    </div>
+                    <div class="panel-footer">
+                        <a data-toggle="modal" data-target="#userInfoModal">
+                            <span class="glyphicon glyphicon-chevron-right pull-right"></span>修改信息
+                        </a>
                     </div>
                 </div>
             </div>
@@ -69,7 +115,7 @@
                 <h4 class="modal-title" id="myModalLabel">新增借阅</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form" action="">
+                <form class="form-horizontal" role="form" action="/user/borrow" id="borrowForm">
                     <div class="form-group">
                         <label for="inputBookID" class="col-sm-2 control-label">书号</label>
                         <div class="col-sm-10">
@@ -94,6 +140,46 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="userInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myUserInfoModal">个人信息修改</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" action="/user/update" id="userinfoForm">
+                    <div class="form-group">
+                        <label for="usernameInput" class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="usernameInput" name="name"
+                                   value="#(user.uName)"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="genderInput" class="col-sm-2 control-label">性别</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="genderInput" name="gender"
+                                   value="#(user.uGender)"/>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="telInput" class="col-sm-2 control-label">电话</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="telInput" name="tel"
+                                   value="#(user.uTel)"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="userInfoBtn">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <script type="text/javascript">
     $('#checkBtn').click(function () {
@@ -108,6 +194,14 @@
                 bookNameField.value = name;
             }
         })
+    })
+    $('#borrowBtn').click(function () {
+        var borrowForm = document.getElementById("borrowForm");
+        borrowForm.submit();
+    })
+    $('#userInfoBtn').click(function () {
+        var userinfoForm = document.getElementById("userinfoForm");
+        userinfoForm.submit();
     })
 </script>
 </html>
