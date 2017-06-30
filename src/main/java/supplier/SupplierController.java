@@ -1,9 +1,11 @@
 package supplier;
 
+import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.IAtom;
 import common.model.Supplier;
+import login.AdminAuthInterceptor;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.List;
 /**
  * Created by wgz61 on 2017/6/30.
  */
+@Before(AdminAuthInterceptor.class)
 public class SupplierController extends Controller {
     public void index() {
         ArrayList<String> preList = new ArrayList<String>();

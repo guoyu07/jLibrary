@@ -1,5 +1,6 @@
 package user;
 
+import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.IAtom;
@@ -8,6 +9,7 @@ import common.model.Book;
 import common.model.Circulation;
 import common.model.Typee;
 import common.model.User;
+import login.UserAuthInterceptor;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import java.util.List;
 /**
  * Created by wgz61 on 2017/6/28.
  */
+@Before(UserAuthInterceptor.class)
 public class UserController extends Controller {
     public void index() {
         ArrayList<String> preList = new ArrayList<String>();
