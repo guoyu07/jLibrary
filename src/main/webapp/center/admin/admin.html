@@ -12,8 +12,47 @@
 <body>
 <div class="container">
     #@bar(preList, now)
-
+    <div class="row clearfix">
+        <div class="col-md-12" column>
+            <div class="page-header">
+                <h1>
+                    #(admin.aName)
+                    <small>#(admin.aUsername)</small>
+                </h1>
+            </div>
+            <h4>图书种类管理</h4>
+            <div class="panel-body">
+                <div class="btn-group">
+                    <button class="btn btn-info btn-sm">添加种类</button>
+                    <button class="btn btn-info btn-sm">管理种类</button>
+                </div>
+            </div>
+            <h4>图书库存管理</h4>
+            <div class="panel-body">
+                <div class="btn-group">
+                    <button class="btn btn-info btn-sm">图书移动</button>
+                    <button class="btn btn-info btn-sm">图书销毁</button>
+                    <button class="btn btn-info btn-sm">采购图书</button>
+                </div>
+            </div>
+            <h4>供应商信息管理</h4>
+            <div class="panel-body">
+                <div class="btn-group">
+                    <button class="btn btn-info btn-sm">增加供应商</button>
+                    <button class="btn btn-info btn-sm">管理供应商</button>
+                </div>
+            </div>
+            <h4>管理员信息管理</h4>
+            <div class="panel-body">
+                <div class="btn-group">
+                    <button class="btn btn-info btn-sm">增加管理员</button>
+                    <button class="btn btn-info btn-sm">管理管理员</button>
+                </div>
+            </div>
+        </div>
+    </div>
     #@footer()
+</div>
 </div>
 </body>
 </html>

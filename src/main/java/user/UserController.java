@@ -1,6 +1,5 @@
 package user;
 
-import com.jfinal.aop.Duang;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.IAtom;
@@ -26,7 +25,7 @@ public class UserController extends Controller {
         setAttr("now", "用户中心");
         User user = (User)getSession().getAttribute("userInfo");
         setAttr("user", user);
-        List<Record> records = Db.find("SELECT bt.bID, bt.tName, cir.cDate, cir.cDdl, cir.cState FROM (\n" +
+        List<Record> records = Db.find("SELECT cir.id, bt.bID, bt.tName, cir.cDate, cir.cDdl, cir.cState FROM (\n" +
                 "\tSELECT * FROM circulation WHERE circulation.cUser = " + user.getInt("id") + "\n" +
                 ")AS cir\n" +
                 "INNER JOIN (\n" +
@@ -70,23 +69,40 @@ public class UserController extends Controller {
         final int bookID = getParaToInt("bookID");
 
         List<Circulation> cir = Circulation.dao.find("SELECT * FROM circulation WHERE cBook = " +bookID);
-        if(cir != null) {
+        if(cir.size()!=0) {
             for (Circulation c : cir
                  ) {
                 if(!c.getStr("cState").equals("done")) {
                     setAttr("msg","此书已被借出!");
+                    redirect("/user");
                 }
             }
+        } else {
+            Calendar calendar = Calendar.getInstance();
+            Date now = calendar.getTime();
+            calendar.add(Calendar.DATE, user.getInt("uCredit"));
+            Date ddl = calendar.getTime();
+            Circulation circulation = new Circulation().set("cUser", user.getInt("id"))
+                    .set("cBook", bookID)
+                    .set("cDate", now)
+                    .set("cDdl", ddl);
+            circulation.save();
+            setAttr("msg","借书成功!");
+            redirect("/user");
         }
-        Calendar calendar = Calendar.getInstance();
-        Date now = calendar.getTime();
-        calendar.add(Calendar.DATE, user.getInt("uCredit"));
-        Date ddl = calendar.getTime();
-        Circulation circulation = new Circulation().set("cUser", user.getInt("id"))
-                .set("cBook", bookID)
-                .set("cDate", now)
-                .set("cDdl", ddl);
-        circulation.save();
-        redirect("/user");
+    }
+
+    public void back() {
+        int cID = getParaToInt(0);
+        if(Circulation.dao.findById(cID).getStr("cState").equals("in")) {
+            Calendar calendar = Calendar.getInstance();
+            Date now = calendar.getTime();
+            Circulation.dao.findById(cID).set("cState","done").set("cReDate", now).update();
+            setAttr("msg","归还成功!");
+            redirect("/user");
+        } else {
+            setAttr("msg","归还失败!");
+            redirect("/user");
+        }
     }
 }

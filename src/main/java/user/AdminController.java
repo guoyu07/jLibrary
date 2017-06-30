@@ -12,6 +12,7 @@ public class AdminController extends Controller {
         ArrayList<String> preList = new ArrayList<String>();
         setAttr("preList", null);
         setAttr("now", "管理员中心");
+        setAttr("admin", getSession().getAttribute("adminInfo"));
         render("/center/admin/admin.html");
     }
 }

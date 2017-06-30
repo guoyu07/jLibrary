@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+#include("/common/_nav.html")
+#include("/common/_footer.html")
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>jLibrary</title>
+</head>
+<body>
+<div class="container">
+    #@bar(preList, now)
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        供应商管理
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form" id="queryForm">
+                        <div class="form-group">
+                            <label for="keyword">关键字</label>
+                            <input type="text" class="form-control" id="keyword" placeholder="请输入关键字...">
+                        </div>
+                        <div class="checkbox-inline">
+                            <label>
+                                <input type="radio" name="queryType" id="optionsRadios1" value="id" checked>供应商编号
+                            </label>
+                        </div>
+                        <div class="checkbox-inline">
+                            <label>
+                                <input type="radio" name="queryType" id="optionsRadios2" value="name">名称
+                            </label>
+                        </div>
+                    </form>
+                    <div class="pull-right">
+                        <label>
+                            <div class="btn-group">
+                                <button id="queryAllBtn" class="btn btn-default" value="查看全部">查看全部</button>
+                                <button id="queryBtn" class="btn btn-primary" value="查询">查询</button>
+                            </div>
+                        </label>
+                    </div>
+
+                </div>
+                <div class="panel-footer">
+
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        查询结果
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div id="resultDiv">
+                        <table class="table table-striped">
+                            <thead id="grid_head">
+                            <tr>
+                                <th>供应商编号</th>
+                                <th>供应商名称</th>
+                                <th>修改操作</th>
+                                <th>删除操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="grid_body">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    #@footer()
+</div>
+</body>
+<script type="text/javascript">
+    $("#queryAllBtn").click(function () {
+        var radio = $('input[type="radio"][name="queryType"]:checked').val();
+        var queryType = radio;
+        $("#grid_body").empty();
+        var loading = "正在加载...";
+        $("#grid_body").append(loading);
+        $.getJSON("/supplier/query", {"isAll": "yes", "queryType": radio}, function (data) {
+            $("#grid_body").empty();
+            $.each(data.res, function (i, item) {
+                var tr = "<tr>";
+                tr += "<td>" + item.id + "</td>";
+                tr += "<td>" + item.sName + "</td>";
+                tr += "<td><a onclick='update(" + item.id + ")'>修改</a></td>";
+                tr += "<td><a onclick='del(" + item.id + ")'>删除</a></td>";
+                tr += "</tr>";
+                $("#grid_body").append(tr);
+            });
+        });
+    });
+    $("#queryBtn").click(function () {
+        var keyword = $("#keyword").val();
+        var radio = $('input[type="radio"][name="queryType"]:checked').val();
+        var queryType = radio;
+
+        $("#grid_body").empty();
+        var loading = "正在加载...";
+        $("#grid_body").append(loading);
+        $.getJSON("/supplier/query", {"isAll": "no", "queryType": radio, "keyword": keyword}, function (data) {
+            $("#grid_body").empty();
+            $.each(data.res, function (i, item) {
+                var tr = "<tr>";
+                tr += "<td>" + item.id + "</td>";
+                tr += "<td>" + item.sName + "</td>";
+                tr += "<td><a onclick='update(" + item.id + ")'>修改</a></td>";
+                tr += "<td><a onclick='del(" + item.id + ")'>删除</a></td>";
+                tr += "</tr>";
+                $("#grid_body").append(tr);
+            });
+        });
+    })
+    function del(id) {
+        $.getJSON("/supplier/remove", {"id":id}), function (data) {
+            alert(data);
+        }
+//        $.ajax({
+//            type:"POST",
+//            data:id.toString(),
+//            url:"/supplier/remove",
+//            success: function (data) {
+//                alert(data.msg);
+//            }
+//        })
+    }
+</script>
+</html>
