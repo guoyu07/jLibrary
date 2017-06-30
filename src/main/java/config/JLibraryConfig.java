@@ -9,6 +9,7 @@ import common.model.*;
 import index.HelloController;
 import index.IndexController;
 import login.LoginController;
+import supplier.SupplierController;
 import user.AdminController;
 import user.UserController;
 
@@ -28,6 +29,7 @@ public class JLibraryConfig extends JFinalConfig {
         routes.add("/user", UserController.class);
         routes.add("/admin", AdminController.class);
         routes.add("/book", BookController.class);
+        routes.add("/supplier", SupplierController.class);
     }
 
     public void configEngine(Engine engine) {
