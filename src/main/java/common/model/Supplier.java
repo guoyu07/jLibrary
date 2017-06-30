@@ -1,4 +1,4 @@
-package common.modal;
+package common.model;
 
 import com.jfinal.plugin.activerecord.Model;
 

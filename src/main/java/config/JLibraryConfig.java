@@ -5,7 +5,7 @@ import com.jfinal.config.*;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.template.Engine;
-import common.modal.*;
+import common.model.*;
 import index.HelloController;
 import index.IndexController;
 import login.LoginController;
@@ -35,13 +35,14 @@ public class JLibraryConfig extends JFinalConfig {
     }
 
     public void configPlugin(Plugins plugins) {
-        DruidPlugin dp = new DruidPlugin("jdbc:mysql://lovexiguazhi.pw/jLibrary","root","");
+        DruidPlugin dp = new DruidPlugin("jdbc:mysql://lovexiguazhi.pw/jLibrary?characterEncoding=utf8","root","");
         plugins.add(dp);
         ActiveRecordPlugin arp = new ActiveRecordPlugin(dp);
         plugins.add(arp);
 
         arp.addMapping("admin", Admin.class);
         arp.addMapping("book", Book.class);
+        arp.addMapping("circulation", Circulation.class);
         arp.addMapping("locale", Locale.class);
         arp.addMapping("supplier", Supplier.class);
         arp.addMapping("typee", Typee.class);

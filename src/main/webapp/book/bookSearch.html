@@ -2,7 +2,7 @@
 #include("/common/_nav.html")
 #include("/common/_footer.html")
 #include("_result.html")
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -115,7 +115,6 @@
 //        }))
         $("#grid_head").empty();
         var th = "<tr>";
-        if(queryType == "id") {
             th += "<th>书名</th>";
             th += "<th>作者</th>";
             th += "<th>出版社</th>";
@@ -127,7 +126,6 @@
             $("#grid_body").empty();
             var loading = "正在加载...";
             $("#grid_body").append(loading);
-        }
         $.getJSON("/book/query", {"isAll": "yes", "queryType": radio}, function(data) {
             $("#grid_body").empty();
             $.each(data.res, function (i, item) {
@@ -142,6 +140,67 @@
                 $("#grid_body").append(tr);
             });
         });
+    });
+    $("#queryBtn").click(function () {
+        var keyword = $("#keyword").val();
+        var radio = $('input[type="radio"][name="queryType"]:checked').val();
+        var queryType = radio;
+
+        $("#grid_head").empty();
+        var th = "<tr>";
+        if(queryType == "id" || queryType == "name" || queryType == "author") {
+            th += "<th>书名</th>";
+            th += "<th>作者</th>";
+            th += "<th>出版社</th>";
+            th += "<th>存放位置</th>";
+            th += "<th>供应商</th>";
+            th += "<th>ISBN</th>";
+            th += "</tr>";
+            $("#grid_head").append(th);
+            $("#grid_body").empty();
+            var loading = "正在加载...";
+            $("#grid_body").append(loading);
+            $.getJSON("/book/query", {"isAll": "no", "queryType": radio, "keyword": keyword}, function(data) {
+                $("#grid_body").empty();
+                $.each(data.res, function (i, item) {
+                    var tr = "<tr>";
+                    tr += "<td>" + item.name + "</td>";
+                    tr += "<td>" + item.author + "</td>";
+                    tr += "<td>" + item.press + "</td>";
+                    tr += "<td>" + item.locale + "</td>";
+                    tr += "<td>" + item.supplier + "</td>";
+                    tr += "<td>" + item.isbn + "</td>";
+                    tr += "</tr>";
+                    $("#grid_body").append(tr);
+                });
+            });
+        } else if(queryType == "locale" || queryType == "supplier") {
+            th += "<th>书本号</th>";
+            th += "<th>书号</th>";
+            th += "<th>书名</th>";
+            th += "<th>上架时间</th>";
+            th += "<th>供应商</th>";
+            th += "<th>存放位置</th>";
+            th += "</tr>";
+            $("#grid_head").append(th);
+            $("#grid_body").empty();
+            var loading = "正在加载...";
+            $("#grid_body").append(loading);
+            $.getJSON("/book/query", {"isAll": "no", "queryType": radio, "keyword": keyword}, function(data) {
+                $("#grid_body").empty();
+                $.each(data.res, function (i, item) {
+                    var tr = "<tr>";
+                    tr += "<td>" + item.bookID + "</td>";
+                    tr += "<td>" + item.bType + "</td>";
+                    tr += "<td>" + item.tName + "</td>";
+                    tr += "<td>" + item.bDate + "</td>";
+                    tr += "<td>" + item.sName + "</td>";
+                    tr += "<td>" + item.lName + "</td>";
+                    tr += "</tr>";
+                    $("#grid_body").append(tr);
+                });
+            });
+        }
     })
 </script>
 </html>

@@ -1,8 +1,8 @@
 package user;
 
 import com.jfinal.core.Controller;
-import common.modal.Book;
-import common.modal.Typee;
+import common.model.Book;
+import common.model.Typee;
 
 import java.util.ArrayList;
 

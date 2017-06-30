@@ -2,8 +2,8 @@ package login;
 
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
-import common.modal.Admin;
-import common.modal.User;
+import common.model.Admin;
+import common.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

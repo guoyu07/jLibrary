@@ -1,13 +1,12 @@
 package index;
 
 import com.jfinal.core.Controller;
-import common.modal.Book;
-import common.modal.Locale;
-import common.modal.Typee;
+import common.model.Book;
+import common.model.Locale;
+import common.model.Typee;
 import common.viewmodel.NewBook;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by wgz61 on 2017/6/28.
