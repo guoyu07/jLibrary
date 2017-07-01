@@ -48,7 +48,7 @@ public class SupplierController extends Controller {
         boolean succeed = Db.tx(new IAtom() {
             public boolean run() throws SQLException {
                 int flag1 = Db.update("DELETE FROM book WHERE bSupplier = " + id);
-                boolean flag2 = Db.deleteById("supplier", id);
+                boolean flag2 = Db.deleteById("supplier65165", id);
                 setAttr("msg", "删除成功!");
                 return flag1 >= 0 && flag2;
             }
