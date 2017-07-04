@@ -34,6 +34,12 @@ As you can see in config.JLibraryConfig, the information of database connection 
 
 在config.JLibraryConfig类中你可以看到，数据库连接的信息是存在"jLibrary.txt"中的，你可以修改成你所需的参数。你可以找到用来创建MySql数据库的"recovery.sql"。MariaDB兼容，微软SQLServer不建议使用，因为并没有测试过。
 
+### Account 账户
+
+There are two types of users designed. One is ordinary user and the other is admin user. For ordinary one, you could sign in this account given in recovery.sql, wung@live.com with password 123456. And for admin, admin@live.com with password 123321.
+
+有设计两种账户。一是普通用户，二是管理员用户。普通用户请用wung@live.com，密码123456的账户登录，管理员用户请用admin@live.com，密码123321的账户登录。
+
 ## JFinal Web Framework
 
 - https://github.com/jfinal/jfinal (Simplified Chinese 简体中文)
