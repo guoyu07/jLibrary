@@ -25,11 +25,13 @@ A library management system developed with jFinal web framework. 一个使用jFi
 ### Tomcat
 
 If you want to use Tomcat instead of Jetty bundled with JFinal, you might remove the jetty-server dependency before compiling.
+
 如果你想用Tomcat替代jFinal中自带的Jetty服务器，你需要将jetty-server的包依赖去除。
 
 ### Database 数据库
 
 As you can see in config.JLibraryConfig, the information of database connection is saved in "jLibrary.txt", you could alter the properties as you like. You can find "recovery.sql" which is used to build new schema into your MySQL database. MariaDB is compatible, and MSSQLServer is not recommended as it hasn't been tested.
+
 在config.JLibraryConfig类中你可以看到，数据库连接的信息是存在"jLibrary.txt"中的，你可以修改成你所需的参数。你可以找到用来创建MySql数据库的"recovery.sql"。MariaDB兼容，微软SQLServer不建议使用，因为并没有测试过。
 
 ## JFinal Web Framework
