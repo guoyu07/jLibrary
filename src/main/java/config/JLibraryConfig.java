@@ -2,6 +2,7 @@ package config;
 
 import book.BookController;
 import com.jfinal.config.*;
+import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.template.Engine;
@@ -19,7 +20,8 @@ import user.UserController;
 public class JLibraryConfig extends JFinalConfig {
 
     public void configConstant(Constants constants) {
-        constants.setDevMode(true);
+        PropKit.use("jLibrary.txt");
+        constants.setDevMode(PropKit.getBoolean("devMode"));
     }
 
     public void configRoute(Routes routes) {
@@ -37,7 +39,12 @@ public class JLibraryConfig extends JFinalConfig {
     }
 
     public void configPlugin(Plugins plugins) {
-        DruidPlugin dp = new DruidPlugin("jdbc:mysql://lovexiguazhi.pw/jLibrary?characterEncoding=utf8","root","");
+        PropKit.use("jLibrary.txt");
+        String mysqlHost = PropKit.get("host");
+        String mysqlRoot = PropKit.get("root");
+        String mysqlPassword = PropKit.get("password");
+
+        DruidPlugin dp = new DruidPlugin(mysqlHost,mysqlRoot,mysqlPassword);
         plugins.add(dp);
         ActiveRecordPlugin arp = new ActiveRecordPlugin(dp);
         plugins.add(arp);

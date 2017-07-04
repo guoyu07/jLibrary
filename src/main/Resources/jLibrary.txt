@@ -1,0 +1,4 @@
+host = jdbc:mysql://lovexiguazhi.pw/jLibrary?characterEncoding=utf8
+root = root
+password =
+devMode = true
