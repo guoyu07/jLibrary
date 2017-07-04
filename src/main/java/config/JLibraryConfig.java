@@ -21,6 +21,7 @@ public class JLibraryConfig extends JFinalConfig {
 
     public void configConstant(Constants constants) {
         PropKit.use("jLibrary.txt");
+
         constants.setDevMode(PropKit.getBoolean("devMode"));
     }
 
